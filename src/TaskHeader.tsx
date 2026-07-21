@@ -1,6 +1,6 @@
 import React from 'react'
 import { taskCopy } from './lib/task-copy.js'
-import { HeaderTitle } from './header-title.js'
+import { HeaderTitle } from './HeaderTitle.js'
 
 type TaskHeaderProps = Readonly<{
   activeCount: number

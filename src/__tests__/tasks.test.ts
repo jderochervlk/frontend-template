@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { addTask, clearCompletedTasks, toggleTask } from './tasks.js';
-import type { Task } from './tasks.js';
+import { addTask, clearCompletedTasks, toggleTask } from '../lib/tasks.js';
+import type { Task } from '../lib/tasks.js';
 
 
 const baseTasks: Task[] = [

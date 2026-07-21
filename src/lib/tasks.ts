@@ -1,4 +1,4 @@
-export type Task = Readonly<{
+type Task = Readonly<{
   id: string
   title: string
   completed: boolean
@@ -6,21 +6,28 @@ export type Task = Readonly<{
 
 const makeId = (): string => crypto.randomUUID()
 
-export const addTask = (tasks: readonly Task[], title: string): Task[] => {
-  return [
+const addTask = (tasks: readonly Task[], title: string): Task[] => [
     {
       completed: false,
       id: makeId(),
       title,
     },
     ...tasks,
-  ]
-}
+]
 
-export const toggleTask = (tasks: readonly Task[], id: string): Task[] => {
-  return tasks.map((task) => (task.id === id ? { ...task, completed: !task.completed } : task))
-}
+const toggleTask = (tasks: readonly Task[], id: string): Task[] =>
+  tasks.map((task) => {
+    if (task.id === id) {
+      return {
+        completed: !task.completed,
+        id: task.id,
+        title: task.title,
+      }
+    }
 
-export const clearCompletedTasks = (tasks: readonly Task[]): Task[] => {
-  return tasks.filter((task) => !task.completed)
-}
+    return task
+  })
+
+const clearCompletedTasks = (tasks: readonly Task[]): Task[] => tasks.filter((task) => !task.completed)
+
+export { addTask, clearCompletedTasks, type Task, toggleTask }

@@ -1,8 +1,8 @@
 import React from 'react'
-import { TaskActions } from './task-actions.js'
-import { TaskForm } from './task-form.js'
-import { TaskHeader } from './task-header.js'
-import { TaskList } from './task-list.js'
+import { TaskActions } from './TaskActions.js'
+import { TaskForm } from './TaskForm.js'
+import { TaskHeader } from './TaskHeader.js'
+import { TaskList } from './TaskList.js'
 import { useTaskBoard } from './lib/use-task-board.js'
 
 const APP_NAME = 'task-board'

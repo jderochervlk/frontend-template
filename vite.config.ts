@@ -1,5 +1,7 @@
 import react from "@vitejs/plugin-react";
 
-export default {
+const config = {
   plugins: [react()],
 }
+
+export default config

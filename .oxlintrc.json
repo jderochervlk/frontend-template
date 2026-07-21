@@ -208,7 +208,6 @@
     "import/default": "error",
     "import/extensions": "error",
     "import/first": "error",
-    "import/group-exports": "error",
     "import/max-dependencies": "error",
     "import/namespace": "error",
     "import/newline-after-import": "error",
@@ -226,10 +225,8 @@
     "import/no-named-as-default-member": "error",
     "import/no-named-default": "error",
     "import/no-namespace": "error",
-    "import/no-nodejs-modules": "error",
-    "import/no-relative-parent-imports": "error",
     "import/no-self-import": "error",
-    "import/no-unassigned-import": "error",
+    "import/no-unassigned-import": ["error", { "allow": ["**/*.css"] }],
     "import/no-webpack-loader-syntax": "error",
     "import/prefer-default-export": "error",
     "import/unambiguous": "error",
@@ -401,7 +398,6 @@
     "oxc/no-barrel-file": "error",
     "oxc/no-const-enum": "error",
     "oxc/no-map-spread": "error",
-    "oxc/no-rest-spread-properties": "error",
     "oxc/no-this-in-exported-function": "error",
     "oxc/number-arg-out-of-range": "error",
     "oxc/only-used-in-recursion": "error",
@@ -611,7 +607,6 @@
     "unicorn/error-message": "error",
     "unicorn/escape-case": "error",
     "unicorn/explicit-length-check": "error",
-    "unicorn/filename-case": "error",
     "unicorn/import-style": "error",
     "unicorn/max-nested-calls": "error",
     "unicorn/new-for-builtins": "error",
@@ -886,5 +881,13 @@
     "builtin": true
   },
   "globals": {},
-  "ignorePatterns": []
+  "ignorePatterns": [],
+  "overrides": [
+    {
+      "files": ["*.config.js", "*.config.ts"],
+      "rules": {
+        "import/no-default-export": "off"
+      }
+    }
+  ]
 }

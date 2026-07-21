@@ -11,4 +11,8 @@
 - Functions should take in just 1 or 2 arguments
 - Functions should be composable using a pipe function
 - Never disable a linting rule, either inline or in the config file
-- 
+
+
+## Project structure
+- React components should always have CamelCase names
+- Tests should all live in src/__tests__ folder

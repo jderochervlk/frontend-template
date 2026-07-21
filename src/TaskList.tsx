@@ -1,7 +1,7 @@
 import React from 'react'
 import { taskCopy } from './lib/task-copy.js'
 import type { Task } from './lib/tasks.js'
-import { TaskItem } from './task-item.js'
+import { TaskItem } from './TaskItem.js'
 
 type TaskListProps = Readonly<{
   onToggle: (event: Readonly<React.ChangeEvent<HTMLInputElement>>) => void
