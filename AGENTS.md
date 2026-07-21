@@ -16,3 +16,4 @@
 ## Project structure
 - React components should always have CamelCase names
 - Tests should all live in src/__tests__ folder
+- 
