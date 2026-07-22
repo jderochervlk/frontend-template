@@ -16,13 +16,17 @@
     "noImplicitReturns": true,
     "noPropertyAccessFromIndexSignature": true,
     "noUncheckedIndexedAccess": true,
+    "noUncheckedSideEffectImports": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
+    "skipLibCheck": false,
+    "useUnknownInCatchVariables": true,
+    "verbatimModuleSyntax": true,
     "incremental": true
   },
-  "include": ["src", "*.config.ts"],
+  "include": ["apps", "packages"],
   "$schema": "https://www.schemastore.org/tsconfig"
 }

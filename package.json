@@ -4,17 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
+    "dev": "pnpm --filter @codex-app/todo run dev",
+    "build": "pnpm --recursive --if-present run build",
+    "preview": "pnpm --filter @codex-app/todo run preview",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "lint": "oxlint src vite.config.ts --deny-warnings --config .oxlintrc.json",
+    "lint": "oxlint apps packages --deny-warnings --config .oxlintrc.json",
     "format": "oxfmt -c .oxfmtrc.json . --write",
-    "test": "vitest run"
-  },
-  "dependencies": {
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7"
+    "test": "pnpm --recursive --if-present run test"
   },
   "devDependencies": {
     "@types/node": "^26.1.1",
