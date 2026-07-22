@@ -7,12 +7,12 @@ type Task = Readonly<{
 const makeId = (): string => crypto.randomUUID()
 
 const addTask = (tasks: readonly Task[], title: string): Task[] => [
-    {
-      completed: false,
-      id: makeId(),
-      title,
-    },
-    ...tasks,
+  {
+    completed: false,
+    id: makeId(),
+    title,
+  },
+  ...tasks,
 ]
 
 const toggleTask = (tasks: readonly Task[], id: string): Task[] =>
@@ -28,6 +28,7 @@ const toggleTask = (tasks: readonly Task[], id: string): Task[] =>
     return task
   })
 
-const clearCompletedTasks = (tasks: readonly Task[]): Task[] => tasks.filter((task) => !task.completed)
+const clearCompletedTasks = (tasks: readonly Task[]): Task[] =>
+  tasks.filter((task) => !task.completed)
 
 export { addTask, clearCompletedTasks, type Task, toggleTask }

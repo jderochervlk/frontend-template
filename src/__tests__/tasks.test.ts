@@ -1,7 +1,7 @@
-import { describe, expect, it } from 'vitest';
-import { addTask, clearCompletedTasks, toggleTask } from '../lib/tasks.js';
-import type { Task } from '../lib/tasks.js';
+import { describe, expect, it } from 'vitest'
 
+import { addTask, clearCompletedTasks, toggleTask } from '../lib/tasks.js'
+import type { Task } from '../lib/tasks.js'
 
 const baseTasks: Task[] = [
   { completed: false, id: '1', title: 'Ship scaffold' },
@@ -9,21 +9,24 @@ const baseTasks: Task[] = [
 ]
 
 describe('task helpers', () => {
-  it('adds a new task to the front of the list', () => {expect.hasAssertions();
+  it('adds a new task to the front of the list', () => {
+    expect.hasAssertions()
     const tasks = addTask(baseTasks, 'Write tests')
 
     expect(tasks[0]?.title).toBe('Write tests')
     expect(tasks).toHaveLength(3)
   })
 
-  it('toggles task completion', () => {expect.hasAssertions();
+  it('toggles task completion', () => {
+    expect.hasAssertions()
     const tasks = toggleTask(baseTasks, '1')
 
     expect(tasks[0]?.completed).toBe(true)
     expect(tasks[1]?.completed).toBe(true)
   })
 
-  it('removes completed tasks', () => {expect.hasAssertions();
+  it('removes completed tasks', () => {
+    expect.hasAssertions()
     const tasks = clearCompletedTasks(baseTasks)
 
     expect(tasks).toStrictEqual([{ completed: false, id: '1', title: 'Ship scaffold' }])

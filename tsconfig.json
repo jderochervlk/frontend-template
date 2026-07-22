@@ -21,7 +21,7 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "incremental": true,
+    "incremental": true
   },
   "include": ["src", "*.config.ts"],
   "$schema": "https://www.schemastore.org/tsconfig"

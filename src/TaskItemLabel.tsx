@@ -1,4 +1,5 @@
 import React from 'react'
+
 import type { Task } from './lib/tasks.js'
 
 type TaskItemLabelProps = Readonly<{

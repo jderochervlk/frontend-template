@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import type React from 'react'
-import { addTask, clearCompletedTasks, toggleTask } from './tasks.js'
+
 import { loadTasks, saveTasks } from './task-storage.js'
+import { addTask, clearCompletedTasks, toggleTask } from './tasks.js'
 import type { Task } from './tasks.js'
 
 export type TaskBoard = Readonly<{
@@ -16,50 +17,81 @@ export type TaskBoard = Readonly<{
   tasks: readonly Task[]
 }>
 
-export const useTaskBoard = (): TaskBoard => {
+type PersistentTasks = Readonly<{
+  addTaskByTitle: (title: string) => void
+  clearCompleted: () => void
+  reset: () => void
+  tasks: readonly Task[]
+  toggleTaskById: (id: string) => void
+}>
+
+const usePersistentTasks = (): PersistentTasks => {
   const [tasks, setTasks] = useState<Task[]>(loadTasks)
-  const [draft, setDraft] = useState('')
-  const completedCount = useMemo(() => tasks.filter((task) => task.completed).length, [tasks])
 
   useEffect(() => {
     saveTasks(tasks)
   }, [tasks])
 
-  const handleDraftChange = useCallback((event: Readonly<React.ChangeEvent<HTMLInputElement>>): void => {
-    setDraft(event.target.value)
+  const addTaskByTitle = useCallback((title: string): void => {
+    setTasks((current) => addTask(current, title))
   }, [])
 
-  const handleSubmit = useCallback((event: Readonly<React.SyntheticEvent<HTMLFormElement>>): void => {
-    event.preventDefault()
-
-    const nextTitle = draft.trim()
-    if (nextTitle === '') {
-      return
-    }
-
-    setTasks((current) => addTask(current, nextTitle))
-    setDraft('')
-  }, [draft])
-
-  const handleToggle = useCallback((event: Readonly<React.ChangeEvent<HTMLInputElement>>): void => {
-    setTasks((current) => toggleTask(current, event.target.value))
-  }, [])
-
-  const handleClear = useCallback((): void => {
+  const clearCompleted = useCallback((): void => {
     setTasks((current) => clearCompletedTasks(current))
   }, [])
 
-  const handleReset = useCallback((): void => {
+  const reset = useCallback((): void => {
     setTasks([])
   }, [])
+
+  const toggleTaskById = useCallback((id: string): void => {
+    setTasks((current) => toggleTask(current, id))
+  }, [])
+
+  return { addTaskByTitle, clearCompleted, reset, tasks, toggleTaskById }
+}
+
+export const useTaskBoard = (): TaskBoard => {
+  const { addTaskByTitle, clearCompleted, reset, tasks, toggleTaskById } = usePersistentTasks()
+  const [draft, setDraft] = useState('')
+  const completedCount = useMemo(() => tasks.filter((task) => task.completed).length, [tasks])
+
+  const handleDraftChange = useCallback(
+    (event: Readonly<React.ChangeEvent<HTMLInputElement>>): void => {
+      setDraft(event.target.value)
+    },
+    [],
+  )
+
+  const handleSubmit = useCallback(
+    (event: Readonly<React.SyntheticEvent<HTMLFormElement>>): void => {
+      event.preventDefault()
+
+      const nextTitle = draft.trim()
+      if (nextTitle === '') {
+        return
+      }
+
+      addTaskByTitle(nextTitle)
+      setDraft('')
+    },
+    [addTaskByTitle, draft],
+  )
+
+  const handleToggle = useCallback(
+    (event: Readonly<React.ChangeEvent<HTMLInputElement>>): void => {
+      toggleTaskById(event.target.value)
+    },
+    [toggleTaskById],
+  )
 
   return {
     activeCount: tasks.length - completedCount,
     completedCount,
     draft,
-    handleClear,
+    handleClear: clearCompleted,
     handleDraftChange,
-    handleReset,
+    handleReset: reset,
     handleSubmit,
     handleToggle,
     tasks,
