@@ -1,0 +1,4 @@
+interface:
+  display_name: "Write Modern CSS"
+  short_description: "Strict modern CSS and responsive layout rules"
+  default_prompt: "Use $write-modern-css to implement this interface with native, responsive, accessible CSS."
