@@ -3,9 +3,6 @@
     "target": "esnext",
     "module": "nodenext",
     "moduleResolution": "nodenext",
-    "lib": ["ESNext", "DOM"],
-    "jsx": "react-jsx",
-    "types": ["vite/client", "node"],
     "noEmit": true,
     "strict": true,
     "allowUnusedLabels": false,
@@ -24,9 +21,13 @@
     "esModuleInterop": true,
     "skipLibCheck": false,
     "useUnknownInCatchVariables": true,
-    "verbatimModuleSyntax": true,
-    "incremental": true
+    "verbatimModuleSyntax": true
   },
-  "include": ["apps", "packages"],
+  "files": [],
+  "references": [
+    { "path": "./apps/todo" },
+    { "path": "./packages/api" },
+    { "path": "./packages/components" }
+  ],
   "$schema": "https://www.schemastore.org/tsconfig"
 }

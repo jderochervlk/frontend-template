@@ -7,7 +7,7 @@
     "dev": "pnpm --filter @codex-app/todo run dev",
     "build": "pnpm --recursive --if-present run build",
     "preview": "pnpm --filter @codex-app/todo run preview",
-    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "typecheck": "tsc --build tsconfig.json",
     "lint": "oxlint apps packages --deny-warnings --config .oxlintrc.json",
     "format": "oxfmt -c .oxfmtrc.json . --write",
     "test": "pnpm --recursive --if-present run test"
