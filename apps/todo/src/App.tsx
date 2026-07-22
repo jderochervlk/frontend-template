@@ -1,15 +1,15 @@
 import React from 'react'
 
-import { useTaskBoard } from './lib/use-task-board.js'
 import { TaskActions } from './TaskActions.js'
 import { TaskForm } from './TaskForm.js'
 import { TaskHeader } from './TaskHeader.js'
 import { TaskList } from './TaskList.js'
+import { browserTaskBoardDependencies, useTaskBoard } from './use-task-board.js'
 
 const APP_NAME = 'task-board'
 
 const App = (): React.JSX.Element => {
-  const taskBoard = useTaskBoard()
+  const taskBoard = useTaskBoard(browserTaskBoardDependencies)
 
   return (
     <main className='app-shell'>
@@ -17,15 +17,15 @@ const App = (): React.JSX.Element => {
         <TaskHeader activeCount={taskBoard.activeCount} completedCount={taskBoard.completedCount} />
         <TaskForm
           draft={taskBoard.draft}
-          onChange={taskBoard.handleDraftChange}
+          onDraftChange={taskBoard.handleDraftChange}
           onSubmit={taskBoard.handleSubmit}
         />
-        <TaskList onToggle={taskBoard.handleToggle} tasks={taskBoard.tasks} />
+        <TaskList onToggle={taskBoard.handleTaskToggle} tasks={taskBoard.tasks} />
         <TaskActions
           completedCount={taskBoard.completedCount}
-          hasTasks={taskBoard.tasks.length > 0}
-          onClear={taskBoard.handleClear}
+          onClear={taskBoard.handleCompletedClear}
           onReset={taskBoard.handleReset}
+          taskCount={taskBoard.tasks.length}
         />
       </section>
     </main>

@@ -1,16 +1,27 @@
 import React from 'react'
 
-import type { Task } from './lib/tasks.js'
+import { isTaskCompleted } from './task.js'
+import type { Task, TaskId } from './task.js'
 
 type TaskItemLabelProps = Readonly<{
-  onToggle: (event: Readonly<React.ChangeEvent<HTMLInputElement>>) => void
+  onToggle: (id: TaskId) => void
   task: Task
 }>
 
+const createToggleHandler =
+  (input: TaskItemLabelProps): ((event: Readonly<React.ChangeEvent<HTMLInputElement>>) => void) =>
+  (): void => {
+    input.onToggle(input.task.id)
+  }
+
 const TaskItemLabel = ({ onToggle, task }: TaskItemLabelProps): React.JSX.Element => (
   <label>
-    <input checked={task.completed} onChange={onToggle} type='checkbox' value={task.id} />
-    <span data-completed={task.completed}>{task.title}</span>
+    <input
+      checked={isTaskCompleted(task)}
+      onChange={createToggleHandler({ onToggle, task })}
+      type='checkbox'
+    />
+    <span data-completed={isTaskCompleted(task)}>{task.title.value}</span>
   </label>
 )
 

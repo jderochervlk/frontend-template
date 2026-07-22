@@ -1,10 +1,10 @@
 import React from 'react'
 
-import type { Task } from './lib/tasks.js'
+import type { Task, TaskId } from './task.js'
 import { TaskItemLabel } from './TaskItemLabel.js'
 
 type TaskItemProps = Readonly<{
-  onToggle: (event: Readonly<React.ChangeEvent<HTMLInputElement>>) => void
+  onToggle: (id: TaskId) => void
   task: Task
 }>
 

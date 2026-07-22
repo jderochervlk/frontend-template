@@ -1,7 +1,6 @@
 import React from 'react'
 
-import { HeaderTitle } from './HeaderTitle.js'
-import { taskCopy } from './lib/task-copy.js'
+import { getTaskStatusCopy, taskCopy } from './task-copy.js'
 
 type TaskHeaderProps = Readonly<{
   activeCount: number
@@ -10,13 +9,11 @@ type TaskHeaderProps = Readonly<{
 
 const TaskHeader = ({ activeCount, completedCount }: TaskHeaderProps): React.JSX.Element => (
   <header className='workspace__header'>
-    <HeaderTitle />
-    <p className='workspace__status'>
-      {activeCount}
-      {taskCopy.open}
-      {completedCount}
-      {taskCopy.done}
-    </p>
+    <div>
+      <p className='eyebrow'>{taskCopy.starterApp}</p>
+      <h1>{taskCopy.taskBoard}</h1>
+    </div>
+    <p className='workspace__status'>{getTaskStatusCopy({ activeCount, completedCount })}</p>
   </header>
 )
 
