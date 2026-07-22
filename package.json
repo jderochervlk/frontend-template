@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm --filter @codex-app/todo run dev",
+    "dev:api": "pnpm --filter @codex-app/api run dev",
     "build": "pnpm --recursive --if-present run build",
     "preview": "pnpm --filter @codex-app/todo run preview",
     "typecheck": "tsc --build tsconfig.json",

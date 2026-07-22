@@ -2,5 +2,20 @@
   "name": "@codex-app/api",
   "version": "0.0.0",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "scripts": {
+    "build": "vite build --ssr src/server.ts --outDir dist --emptyOutDir",
+    "dev": "pnpm run build && pnpm run start",
+    "start": "node dist/server.js",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "@effect/platform": "0.97.0",
+    "@effect/platform-node": "0.108.0",
+    "effect": "3.22.0"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "4.1.10"
+  }
 }
