@@ -12,7 +12,7 @@ const App = (): React.JSX.Element => {
   const taskBoard = useTaskBoard(browserTaskBoardDependencies)
 
   return (
-    <main className='app-shell'>
+    <main className='app-shell' data-app={APP_NAME}>
       <section className='workspace'>
         <TaskHeader activeCount={taskBoard.activeCount} completedCount={taskBoard.completedCount} />
         <TaskForm

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "ignoreDependencies": ["jiti", "tsx", "yaml"],
+  "ignoreExportsUsedInFile": true,
+  "treatConfigHintsAsErrors": true,
+  "workspaces": {
+    "packages/api": {
+      "entry": ["src/server.ts"]
+    }
+  }
+}

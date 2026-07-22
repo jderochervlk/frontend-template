@@ -25,4 +25,4 @@ const healthHandlers = HttpApiBuilder.group(api, 'health', (handlers) =>
 
 const apiLive = HttpApiBuilder.api(api).pipe(Layer.provide(healthHandlers))
 
-export { api, apiLive, healthResponseSchema }
+export { api, apiLive }
