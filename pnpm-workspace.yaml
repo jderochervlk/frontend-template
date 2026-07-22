@@ -1,0 +1,16 @@
+allowBuilds: {}
+blockExoticSubdeps: true
+dangerouslyAllowAllBuilds: false
+ignoreScripts: true
+minimumReleaseAge: 1440
+minimumReleaseAgeIgnoreMissingTime: false
+minimumReleaseAgeStrict: true
+packageImportMethod: clone-or-copy
+savePrefix: ''
+strictDepBuilds: true
+strictPeerDependencies: true
+strictStorePkgContentCheck: true
+trustLockfile: false
+trustPolicy: no-downgrade
+verifyDepsBeforeRun: error
+verifyStoreIntegrity: true
