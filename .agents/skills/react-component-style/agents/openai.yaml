@@ -1,0 +1,4 @@
+interface:
+  display_name: "React Component Style"
+  short_description: "Composable server-first React component rules"
+  default_prompt: "Use $react-component-style to implement this React change with stateless composition and server-first data flow."

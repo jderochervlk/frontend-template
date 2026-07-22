@@ -1,0 +1,4 @@
+interface:
+  display_name: "Playwright E2E"
+  short_description: "Reliable user-focused Playwright E2E tests"
+  default_prompt: "Use $playwright-e2e to test this user flow against the live application with realistic boundaries."

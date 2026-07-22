@@ -1,0 +1,4 @@
+interface:
+  display_name: "Effect Code Style"
+  short_description: "Typed Effect programs, services, and resources"
+  default_prompt: "Use $effect-code-style to implement this workflow with typed Effect errors, services, and resource safety."

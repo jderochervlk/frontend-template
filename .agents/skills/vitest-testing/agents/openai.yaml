@@ -1,0 +1,4 @@
+interface:
+  display_name: "Vitest Testing"
+  short_description: "Strict Vitest and browser component testing"
+  default_prompt: "Use $vitest-testing to add rigorous unit, integration, or browser component tests for this change."

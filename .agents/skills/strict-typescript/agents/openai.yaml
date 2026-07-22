@@ -1,0 +1,4 @@
+interface:
+  display_name: "Strict TypeScript"
+  short_description: "Strict, precise, functional TypeScript rules"
+  default_prompt: "Use $strict-typescript to implement and verify this TypeScript change with the strongest practical types."
