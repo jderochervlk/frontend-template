@@ -1,4 +1,4 @@
 interface:
   display_name: "GitHub Stacked PRs"
-  short_description: "Route Git actions through multi-agent stack checks"
-  default_prompt: "Use $gh-stacked-prs to perform this Git action safely, detecting repository-wide stack ownership and preserving concurrent work in existing worktrees."
+  short_description: "Manage confirmed stacked pull request workflows"
+  default_prompt: "Use $gh-stacked-prs to manage this confirmed stacked-PR workflow while preserving concurrent work in its existing worktree."

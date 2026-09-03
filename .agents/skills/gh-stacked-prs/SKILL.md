@@ -1,15 +1,17 @@
 ---
 name: gh-stacked-prs
-description: Route every Git action through repository-wide, multi-agent stack safety checks, using an ordinary Git workflow only when no existing worktree owns a stack and a stack-aware workflow when the repository is stack-managed. Use whenever Codex is asked to run, recommend, or reason about any Git operation, including status, diff, log, add, commit, branch, switch, checkout, fetch, pull, merge, rebase, cherry-pick, restore, reset, push, force-push, worktree, tag, or stash; whenever code changes may require committing or publishing; whenever multiple agents or worktrees may be active; and whenever a task mentions stacked PRs, a GitHub PR stack, gh stack, a stack number, upstack or downstack branches, adding a PR to a stack, synchronizing remote changes, changing any stack layer, cascading rebases, restructuring a stack, or updating stacked PRs after code changes.
+description: Manage GitHub stacked pull requests and protect concurrent work on their branches and worktrees. Use when the user explicitly requests a stacked-PR workflow or when a read-only repository-wide preflight confirms that the target branch or PR belongs to an existing locally tracked stack. Do not use merely because a task involves Git, worktrees, or an ordinary pull request.
 ---
 
 # GitHub Stacked Pull Requests
 
-Use `gh stack` as the owner of stack topology and cascading history. Keep each change on the branch for the PR that owns it, then propagate rewritten history upward with stack-aware commands.
+Most pull requests are ordinary pull requests and should remain ordinary. A repository can contain stacked and unstacked PRs at the same time, and the existence of one stack does not make every branch or PR part of it. Use a stack only when the user explicitly requests one, the target already belongs to one, or dependent changes are intentionally being split into a stack with the user's authorization.
 
-## Route Every Git Action
+For confirmed stacks, use `gh stack` as the owner of stack topology and cascading history. Keep each change on the branch for the PR that owns it, then propagate rewritten history upward with stack-aware commands.
 
-Before any Git action, inspect enough repository state to determine whether any existing worktree in the repository owns a locally tracked stack. Stack tracking is worktree-specific, so checking only the current branch or worktree is insufficient. Start with non-mutating commands appropriate to the task, normally:
+## Decide Whether This Skill Applies
+
+Before using this skill for otherwise ordinary Git or PR work, perform a minimal read-only preflight to determine whether the target branch or PR belongs to a locally tracked stack. Stack tracking is worktree-specific, so checking only the current branch or worktree is insufficient. Start with:
 
 ```sh
 git status --short
@@ -18,20 +20,21 @@ git worktree list --porcelain
 gh stack view
 ```
 
-Treat exit code 2 from `gh stack view` as "not locally tracked in this worktree" rather than as proof that the repository has no stack. Run read-only `gh stack view --short` inspections from the existing worktree paths reported by `git worktree list --porcelain`. If any existing worktree owns a stack, treat the repository as stack-managed and identify the exact stack worktree, target branch, and layer before editing.
+Treat exit code 2 from `gh stack view` as "not locally tracked in this worktree" rather than as proof that the repository has no stack. Run read-only `gh stack view --short` inspections from the existing worktree paths reported by `git worktree list --porcelain`. Record any stacks found, then determine whether the target branch or PR belongs to one before editing.
 
-- Use an ordinary Git branch-management, rewrite, and publication workflow only after confirming that no existing worktree owns a stack.
-- For locally tracked stack branches, use the stack-aware navigation, rewrite, synchronization, publication, and structural commands in this skill.
+- Do not infer that the target belongs to a stack from branch names, multiple worktrees, multiple open PRs, or the existence of a different stack in the repository.
+- If the target does not belong to an existing stack and the user did not request a new stack, stop applying this skill and use the repository's ordinary Git and PR workflow.
+- If the target belongs to a locally tracked stack, use the stack-aware navigation, rewrite, synchronization, publication, and structural commands in this skill.
 - For read-only Git actions such as `status`, `diff`, `log`, `show`, or `blame`, do not add unnecessary stack commands after stack membership is known unless stack topology affects the answer.
-- Do not convert an unstacked branch into a stack, install `gh stack`, or mutate remote stack state merely because this skill was triggered. Do so only when the task requires stack behavior and the user authorizes the relevant mutation.
+- Do not convert an unstacked branch or ordinary PR into a stack, install `gh stack`, or mutate remote stack state merely because this skill is available or another stack exists. Do so only when the user requests or authorizes stack behavior.
 - When `gh stack` is unavailable and the requested action is ordinary unstacked Git work, continue with Git. Ask about installation only when stack-specific behavior is required.
 
 ## Coordinate Concurrent Stack Work
 
-Assume multiple agents may be working on different stack layers at the same time. Once any existing worktree owns a stack:
+Assume multiple agents may be working on different stack layers at the same time. Once the target work is confirmed to belong to a stack:
 
-- Always work through that existing stack and its existing worktree. Never create a worktree, delete or prune a worktree, make a temporary checkout, create a temporary clone, or use detached HEAD to obtain another workspace.
-- Never route requested work onto an unstacked branch or backup worktree merely because it is currently checked out or clean. Locate the owning layer in the existing stack.
+- Work through that existing stack and its existing worktree. Never create a worktree, delete or prune a worktree, make a temporary checkout, create a temporary clone, or use detached HEAD to obtain another workspace for that stack work.
+- Never route confirmed stack work onto an unstacked branch or backup worktree merely because it is currently checked out or clean. Locate the owning layer in the existing stack.
 - Reuse the existing stack worktree and use `gh stack` for navigation only when its worktree is clean and moving layers will not disrupt concurrent work.
 - Treat unrelated modified, staged, or untracked files anywhere in the stack worktree as active work owned by another agent. Do not edit, stage, stash, commit, restore, discard, move, or otherwise absorb those files.
 - When unrelated edits exist, do not switch branches, rebase, modify stack structure, sync, push, submit, or run any command that could rewrite or publish another agent's work.
@@ -64,7 +67,7 @@ GitHub stacked PRs and `gh stack` are in public preview. Before relying on an un
 
 3. Identify the exact target branch and its position. Never infer stack order from PR numbers, branch names, or creation dates.
 
-4. Check `git worktree list --porcelain` before switching. Inspect existing worktrees for stack ownership. If any worktree owns a stack, operate from that worktree and never add, remove, prune, or temporarily create a worktree. A branch already checked out in another worktree must be edited there.
+4. Check `git worktree list --porcelain` before switching. Inspect existing worktrees for stack ownership and determine whether the target is a member. If it is, operate from that stack's worktree and never add, remove, prune, or temporarily create a worktree for the stack. If it is not, continue with the ordinary workflow while preserving the existing stack worktree. A branch already checked out in another worktree must be edited there.
 
 5. Preserve user work. Do not stash, discard, move, rebase, or commit unrelated changes. Require a clean tree before `sync`, `rebase`, or `modify`, unless the active operation explicitly expects staged conflict resolutions.
 
@@ -80,6 +83,8 @@ GitHub stacked PRs and `gh stack` are in public preview. Before relying on an un
 - After a rewrite, do not push one branch manually. Upstack branches also have new commit IDs and must be updated together.
 
 ## Create a Stack
+
+Create a stack only when the user explicitly requests one or authorizes splitting dependent changes into multiple PRs. Do not stack an independent change merely because the repository already contains a stack.
 
 Create branches from bottom to top. The trunk defaults to the repository default branch; specify `--base` when it should differ.
 
@@ -258,7 +263,7 @@ Use `gh stack merge [stack-or-pr-number]` only when explicitly asked to merge. M
 Before reporting completion:
 
 1. Run the requested tests and repository checks on the final branch state.
-2. Run `gh stack view` from the stack-owning worktree and confirm branch order, PR association, and current position.
+2. When a stack was used, run `gh stack view` from the stack-owning worktree and confirm branch order, PR association, and current position.
 3. Run `git status --short` in the relevant existing worktrees and account for every remaining change without disturbing concurrent work.
 4. State which branch was changed, whether descendants were rebased, and whether `push`, `submit`, `sync`, `link`, or `merge` changed GitHub.
 5. Never claim the stack or PRs were updated remotely if only local commits were created.

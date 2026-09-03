@@ -23,7 +23,7 @@ Personal skills under `.agents/skills` contain the detailed rules for specialize
 - Use `$vitest-testing` for Vitest unit tests, integration tests, Browser Mode component tests, mocking, coverage, and Vitest configuration.
 - Use `$playwright-e2e` for Playwright end-to-end tests, browser user flows, E2E fixtures, and live-application verification.
 - Use `$opening-pull-requests` when creating, opening, submitting, or preparing a GitHub pull request.
-- Use `$gh-stacked-prs` whenever Git operations, worktrees, branches, commits, pushes, pull requests, or stacked pull requests are involved.
+- Before invoking `$gh-stacked-prs`, use `git worktree list --porcelain` and read-only `gh stack view --short` checks in the existing worktrees to determine whether the target branch or PR belongs to a locally tracked stack. Invoke the skill only for a confirmed stack or when the user explicitly requests a stacked-PR workflow; otherwise use the ordinary Git and PR workflow because not every PR is stacked or needs to be stacked.
 - Apply multiple matching skills together. For example, React TSX component work normally uses `$functional-code-style`, `$strict-typescript`, and `$react-component-style`; adding Browser Mode tests also uses `$vitest-testing`.
 - If a named skill is unavailable, say so and continue with the applicable broad rules in this file rather than blocking unnecessarily.
 
