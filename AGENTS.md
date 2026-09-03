@@ -19,8 +19,11 @@ Personal skills under `.agents/skills` contain the detailed rules for specialize
 - Use `$strict-typescript` for every TypeScript or TSX implementation, review, refactor, configuration change, or test.
 - Use `$effect-code-style` whenever Effect is present or the work involves Effect programs, services, Layers, Schema, typed errors, concurrency, or resources.
 - Use `$react-component-style` for React components, hooks, reducers, routes, client boundaries, server rendering, and React data flow.
+- Use `$write-modern-css` for CSS, component styles, responsive layouts, design tokens, animations, or styling architecture.
 - Use `$vitest-testing` for Vitest unit tests, integration tests, Browser Mode component tests, mocking, coverage, and Vitest configuration.
 - Use `$playwright-e2e` for Playwright end-to-end tests, browser user flows, E2E fixtures, and live-application verification.
+- Use `$opening-pull-requests` when creating, opening, submitting, or preparing a GitHub pull request.
+- Use `$gh-stacked-prs` whenever Git operations, worktrees, branches, commits, pushes, pull requests, or stacked pull requests are involved.
 - Apply multiple matching skills together. For example, React TSX component work normally uses `$functional-code-style`, `$strict-typescript`, and `$react-component-style`; adding Browser Mode tests also uses `$vitest-testing`.
 - If a named skill is unavailable, say so and continue with the applicable broad rules in this file rather than blocking unnecessarily.
 
